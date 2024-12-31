@@ -64,8 +64,9 @@ in
         import ./service.nix (
           args
           // {
+            runtimeDirBase = v.runtimeDirBase;
             inherit svcName;
-            cfg = v // {
+            cfg = (builtins.removeAttrs v [ "runtimeDirBase" ]) // {
               name = if v.name != null then v.name else n;
             };
             systemdDir = "github-runner/${n}";

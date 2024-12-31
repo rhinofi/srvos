@@ -8,7 +8,8 @@
 
   systemdDir ? "${svcName}/${cfg.name}",
   # %t: Runtime directory root (usually /run); see systemd.unit(5)
-  runtimeDir ? "%t/${systemdDir}",
+  runtimeDirBase ? "%t",
+  runtimeDir ? "${runtimeDirBase}/${systemdDir}",
   # %S: State directory root (usually /var/lib); see systemd.unit(5)
   stateDir ? "%S/${systemdDir}",
   # %L: Log directory root (usually /var/log); see systemd.unit(5)
@@ -148,7 +149,7 @@ in
             }
             clean_state() {
               find "$STATE_DIRECTORY/" -mindepth 1 -delete
-              copy_tokens 
+              copy_tokens
             }
             unregister_previous_runner
             clean_state

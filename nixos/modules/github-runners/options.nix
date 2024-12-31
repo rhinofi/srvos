@@ -218,4 +218,9 @@ with lib;
       List of Node.js runtimes the runner should support.
     '';
   };
+
+  runtimeDirBase = mkOption {
+    type = types.str;
+    default = "%t";
+  };
 }

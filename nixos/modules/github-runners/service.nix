@@ -12,6 +12,7 @@
   runtimeDir ? "${runtimeDirBase}/${systemdDir}",
   # %S: State directory root (usually /var/lib); see systemd.unit(5)
   stateDir ? "%S/${systemdDir}",
+  cacheDir ? "%C/${systemdDir}",
   # %L: Log directory root (usually /var/log); see systemd.unit(5)
   logsDir ? "%L/${systemdDir}",
   # Name of file stored in service state directory
@@ -243,6 +244,7 @@ in
                 stateDir
                 runtimeDir
                 logsDir
+                cacheDir
               ]
             }"
           )
@@ -268,6 +270,7 @@ in
               stateDir
               runtimeDir
               logsDir
+              cacheDir
             ]
           }"
         ) [ (optionalString (!isNull cfg.githubApp) "-+${unregisterScript}") ];
@@ -285,6 +288,7 @@ in
       RuntimeDirectory = [ systemdDir ];
       # Home of persistent runner data, e.g., credentials
       StateDirectory = [ systemdDir ];
+      CacheDirectory = [ cacheDir ];
       StateDirectoryMode = "0700";
       WorkingDirectory = runtimeDir;
 
